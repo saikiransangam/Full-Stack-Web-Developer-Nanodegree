@@ -24,16 +24,55 @@ class TriviaTestCase(unittest.TestCase):
             self.db.init_app(self.app)
             # create all tables
             self.db.create_all()
-    
+
     def tearDown(self):
         """Executed after reach test"""
         pass
 
     """
-    TODO
+
     Write at least one test for each test for successful operation and for expected errors.
     """
+def search_question(self):
+        res = self.client().post('questions/search', json={"searchTerm": "title"})
+        data = json.loads(res.data)
 
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['questions'])
+        self.assertTrue(data['total_questions'])
+
+
+def delete_questions(self):
+        res = self.client().delete('questions/7')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertEqual(data['deleted'], 7)
+
+ def create_question(self):
+        new_question = {
+        'question': 'Who is president?',
+        'answer': 'Biden',
+        'category': '1',
+        'difficulty': 2,
+        }
+
+def test_delete_questions(self):
+        res = self.client().delete('questions/7')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertEqual(data['deleted'], 7)
+
+def test_categories(self):
+        res = self.client().get('/categories')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['categories'])
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
